@@ -1,6 +1,7 @@
 import findPositionOfCapturingGroup from './findPositionOfCapturingGroup'
 import combineRegExps from './combineRegExps'
 import countPlaceholders from './countPlaceholders'
+import Mention from '../Mention'
 
 const emptyFn = () => {}
 
@@ -30,7 +31,7 @@ const iterateMentionsMarkup = (
   while ((match = regex.exec(value)) !== null) {
     const offset = captureGroupOffsets.find(o => !!match[o]) // eslint-disable-line no-loop-func
     const mentionChildIndex = captureGroupOffsets.indexOf(offset)
-    const { markup, displayTransform } = config[mentionChildIndex] || {};
+    const { markup, displayTransform = Mention.defaultProps.defaultProps } = config[mentionChildIndex] || {};
     const idPos = offset + findPositionOfCapturingGroup(markup, 'id');
     const displayPos = offset + findPositionOfCapturingGroup(markup, 'display');
 

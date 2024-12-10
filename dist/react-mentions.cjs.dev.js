@@ -17,10 +17,10 @@ var React = require('react');
 var React__default = _interopDefault(React);
 var invariant = _interopDefault(require('invariant'));
 var _slicedToArray = _interopDefault(require('@babel/runtime/helpers/slicedToArray'));
-var _objectWithoutProperties = _interopDefault(require('@babel/runtime/helpers/objectWithoutProperties'));
+var PropTypes = _interopDefault(require('prop-types'));
 var useStyles = require('substyle');
 var useStyles__default = _interopDefault(useStyles);
-var PropTypes = _interopDefault(require('prop-types'));
+var _objectWithoutProperties = _interopDefault(require('@babel/runtime/helpers/objectWithoutProperties'));
 var ReactDOM = _interopDefault(require('react-dom'));
 
 // escape RegExp special characters https://stackoverflow.com/a/9310752/5142490
@@ -79,6 +79,65 @@ var countPlaceholders = function countPlaceholders() {
   return count;
 };
 
+var defaultStyle = {
+  fontWeight: 'inherit'
+};
+
+var Mention = function Mention(_ref) {
+  var display = _ref.display,
+      style = _ref.style,
+      className = _ref.className,
+      classNames = _ref.classNames;
+  var styles = useStyles__default(defaultStyle, {
+    style: style,
+    className: className,
+    classNames: classNames
+  });
+  return /*#__PURE__*/React__default.createElement("strong", styles, display);
+};
+
+Mention.propTypes = {
+  /**
+   * Called when a new mention is added in the input
+   *
+   * Example:
+   *
+   * ```js
+   * function(id, display) {
+   *   console.log("user " + display + " was mentioned!");
+   * }
+   * ```
+   */
+  onAdd: PropTypes.func,
+  onRemove: PropTypes.func,
+  renderSuggestion: PropTypes.func,
+  trigger: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)]),
+  markup: PropTypes.string,
+  displayTransform: PropTypes.func,
+
+  /**
+   * If set to `true` spaces will not interrupt matching suggestions
+   */
+  allowSpaceInQuery: PropTypes.bool,
+  isLoading: PropTypes.bool
+};
+Mention.defaultProps = {
+  trigger: '@',
+  markup: '@[__display__](__id__)',
+  displayTransform: function displayTransform(id, display) {
+    return display || id;
+  },
+  onAdd: function onAdd() {
+    return null;
+  },
+  onRemove: function onRemove() {
+    return null;
+  },
+  renderSuggestion: null,
+  isLoading: false,
+  appendSpaceOnAdd: false
+};
+
 var emptyFn = function emptyFn() {}; // Finds all occurrences of the markup in the value and calls the `markupIteratee` callback for each of them.
 // The optional `textIteratee` callback is called for each plain text ranges in between these markup occurrences.
 
@@ -110,7 +169,8 @@ var iterateMentionsMarkup = function iterateMentionsMarkup(value, config, markup
 
     var _ref2 = config[mentionChildIndex] || {},
         markup = _ref2.markup,
-        displayTransform = _ref2.displayTransform;
+        _ref2$displayTransfor = _ref2.displayTransform,
+        displayTransform = _ref2$displayTransfor === void 0 ? Mention.defaultProps.defaultProps : _ref2$displayTransfor;
 
     var idPos = offset + findPositionOfCapturingGroup(markup, 'id');
     var displayPos = offset + findPositionOfCapturingGroup(markup, 'display');
@@ -2132,65 +2192,6 @@ var styled$3 = createDefaultStyle({
   };
 });
 var MentionsInput$1 = styled$3(MentionsInput);
-
-var defaultStyle = {
-  fontWeight: 'inherit'
-};
-
-var Mention = function Mention(_ref) {
-  var display = _ref.display,
-      style = _ref.style,
-      className = _ref.className,
-      classNames = _ref.classNames;
-  var styles = useStyles__default(defaultStyle, {
-    style: style,
-    className: className,
-    classNames: classNames
-  });
-  return /*#__PURE__*/React__default.createElement("strong", styles, display);
-};
-
-Mention.propTypes = {
-  /**
-   * Called when a new mention is added in the input
-   *
-   * Example:
-   *
-   * ```js
-   * function(id, display) {
-   *   console.log("user " + display + " was mentioned!");
-   * }
-   * ```
-   */
-  onAdd: PropTypes.func,
-  onRemove: PropTypes.func,
-  renderSuggestion: PropTypes.func,
-  trigger: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)]),
-  markup: PropTypes.string,
-  displayTransform: PropTypes.func,
-
-  /**
-   * If set to `true` spaces will not interrupt matching suggestions
-   */
-  allowSpaceInQuery: PropTypes.bool,
-  isLoading: PropTypes.bool
-};
-Mention.defaultProps = {
-  trigger: '@',
-  markup: '@[__display__](__id__)',
-  displayTransform: function displayTransform(id, display) {
-    return display || id;
-  },
-  onAdd: function onAdd() {
-    return null;
-  },
-  onRemove: function onRemove() {
-    return null;
-  },
-  renderSuggestion: null,
-  isLoading: false,
-  appendSpaceOnAdd: false
-};
 
 exports.Mention = Mention;
 exports.MentionsInput = MentionsInput$1;
