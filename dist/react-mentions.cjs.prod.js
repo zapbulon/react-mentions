@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 
-var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsumableArray")), _extends = _interopDefault(require("@babel/runtime/helpers/extends")), _classCallCheck = _interopDefault(require("@babel/runtime/helpers/classCallCheck")), _createClass = _interopDefault(require("@babel/runtime/helpers/createClass")), _assertThisInitialized = _interopDefault(require("@babel/runtime/helpers/assertThisInitialized")), _inherits = _interopDefault(require("@babel/runtime/helpers/inherits")), _possibleConstructorReturn = _interopDefault(require("@babel/runtime/helpers/possibleConstructorReturn")), _getPrototypeOf = _interopDefault(require("@babel/runtime/helpers/getPrototypeOf")), _defineProperty = _interopDefault(require("@babel/runtime/helpers/defineProperty")), React = require("react"), React__default = _interopDefault(React), invariant = _interopDefault(require("invariant")), _slicedToArray = _interopDefault(require("@babel/runtime/helpers/slicedToArray")), PropTypes = _interopDefault(require("prop-types")), useStyles = require("substyle"), useStyles__default = _interopDefault(useStyles), _objectWithoutProperties = _interopDefault(require("@babel/runtime/helpers/objectWithoutProperties")), ReactDOM = _interopDefault(require("react-dom")), escapeRegex = function(str) {
+var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsumableArray")), _extends = _interopDefault(require("@babel/runtime/helpers/extends")), _classCallCheck = _interopDefault(require("@babel/runtime/helpers/classCallCheck")), _createClass = _interopDefault(require("@babel/runtime/helpers/createClass")), _assertThisInitialized = _interopDefault(require("@babel/runtime/helpers/assertThisInitialized")), _inherits = _interopDefault(require("@babel/runtime/helpers/inherits")), _possibleConstructorReturn = _interopDefault(require("@babel/runtime/helpers/possibleConstructorReturn")), _getPrototypeOf = _interopDefault(require("@babel/runtime/helpers/getPrototypeOf")), _defineProperty = _interopDefault(require("@babel/runtime/helpers/defineProperty")), React = require("react"), React__default = _interopDefault(React), invariant = _interopDefault(require("invariant")), _slicedToArray = _interopDefault(require("@babel/runtime/helpers/slicedToArray")), _objectWithoutProperties = _interopDefault(require("@babel/runtime/helpers/objectWithoutProperties")), useStyles = require("substyle"), useStyles__default = _interopDefault(useStyles), PropTypes = _interopDefault(require("prop-types")), ReactDOM = _interopDefault(require("react-dom")), escapeRegex = function(str) {
   return (str || "").replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }, PLACEHOLDERS = {
   id: "__id__",
@@ -29,44 +29,7 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
   var markup = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "", count = 0;
   return markup.indexOf("__id__") >= 0 && count++, markup.indexOf("__display__") >= 0 && count++, 
   count;
-}, defaultStyle = {
-  fontWeight: "inherit"
-}, Mention = function(_ref) {
-  var display = _ref.display, style = _ref.style, className = _ref.className, classNames = _ref.classNames, styles = useStyles__default(defaultStyle, {
-    style: style,
-    className: className,
-    classNames: classNames
-  });
-  return React__default.createElement("strong", styles, display);
-};
-
-Mention.propTypes = {
-  onAdd: PropTypes.func,
-  onRemove: PropTypes.func,
-  renderSuggestion: PropTypes.func,
-  trigger: PropTypes.oneOfType([ PropTypes.string, PropTypes.instanceOf(RegExp) ]),
-  markup: PropTypes.string,
-  displayTransform: PropTypes.func,
-  allowSpaceInQuery: PropTypes.bool,
-  isLoading: PropTypes.bool
-}, Mention.defaultProps = {
-  trigger: "@",
-  markup: "@[__display__](__id__)",
-  displayTransform: function(id, display) {
-    return display || id || "";
-  },
-  onAdd: function() {
-    return null;
-  },
-  onRemove: function() {
-    return null;
-  },
-  renderSuggestion: null,
-  isLoading: !1,
-  appendSpaceOnAdd: !1
-};
-
-var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, markupIteratee) {
+}, emptyFn = function() {}, iterateMentionsMarkup = function(value, config, markupIteratee) {
   for (var match, textIteratee = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : emptyFn, regex = combineRegExps(config.map(function(c) {
     return c.regex;
   })), accOffset = 2, captureGroupOffsets = config.map(function(_ref) {
@@ -75,7 +38,7 @@ var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, mar
   }), start = 0, currentPlainTextIndex = 0; null !== (match = regex.exec(value)); ) {
     var offset = captureGroupOffsets.find(function(o) {
       return !!match[o];
-    }), mentionChildIndex = captureGroupOffsets.indexOf(offset), _ref2 = config[mentionChildIndex] || {}, markup = _ref2.markup, _ref2$displayTransfor = _ref2.displayTransform, displayTransform = void 0 === _ref2$displayTransfor ? Mention.defaultProps.displayTransform : _ref2$displayTransfor, idPos = offset + findPositionOfCapturingGroup(markup, "id"), displayPos = offset + findPositionOfCapturingGroup(markup, "display"), id = match[idPos], display = displayTransform(id, match[displayPos]), substr = value.substring(start, match.index);
+    }), mentionChildIndex = captureGroupOffsets.indexOf(offset), _ref2 = config[mentionChildIndex] || {}, markup = _ref2.markup, displayTransform = _ref2.displayTransform, idPos = offset + findPositionOfCapturingGroup(markup, "id"), displayPos = offset + findPositionOfCapturingGroup(markup, "display"), id = match[idPos], display = displayTransform(id, match[displayPos]), substr = value.substring(start, match.index);
     textIteratee(substr, start, currentPlainTextIndex), currentPlainTextIndex += substr.length, 
     markupIteratee(match[0], match.index, currentPlainTextIndex, id, display, mentionChildIndex, start), 
     currentPlainTextIndex += display.length, start = regex.lastIndex;
@@ -1272,6 +1235,19 @@ var getComputedStyleLengthProp = function(forElement, propertyName) {
     "&singleLine": singleLine,
     "&multiLine": !singleLine
   };
-}), MentionsInput$1 = styled$3(MentionsInput);
+}), MentionsInput$1 = styled$3(MentionsInput), defaultStyle = {
+  fontWeight: "inherit"
+};
+
+function Mention(_ref) {
+  var display = _ref.display, style = _ref.style, className = _ref.className, classNames = _ref.classNames, styles = (_ref.trigger, 
+  _ref.markup, _ref.displayTransform, _ref.onAdd, _ref.onRemove, _ref.renderSuggestion, 
+  _ref.isLoading, _ref.appendSpaceOnAdd, useStyles__default(defaultStyle, {
+    style: style,
+    className: className,
+    classNames: classNames
+  }));
+  return React__default.createElement("strong", styles, display);
+}
 
 exports.Mention = Mention, exports.MentionsInput = MentionsInput$1;

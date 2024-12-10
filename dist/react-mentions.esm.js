@@ -10,9 +10,9 @@ import _defineProperty from '@babel/runtime/helpers/esm/defineProperty';
 import React, { Children, useState, useEffect } from 'react';
 import invariant from 'invariant';
 import _slicedToArray from '@babel/runtime/helpers/esm/slicedToArray';
-import PropTypes from 'prop-types';
-import useStyles, { inline } from 'substyle';
 import _objectWithoutProperties from '@babel/runtime/helpers/esm/objectWithoutProperties';
+import useStyles, { inline } from 'substyle';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
 // escape RegExp special characters https://stackoverflow.com/a/9310752/5142490
@@ -71,65 +71,6 @@ var countPlaceholders = function countPlaceholders() {
   return count;
 };
 
-var defaultStyle = {
-  fontWeight: 'inherit'
-};
-
-var Mention = function Mention(_ref) {
-  var display = _ref.display,
-      style = _ref.style,
-      className = _ref.className,
-      classNames = _ref.classNames;
-  var styles = useStyles(defaultStyle, {
-    style: style,
-    className: className,
-    classNames: classNames
-  });
-  return /*#__PURE__*/React.createElement("strong", styles, display);
-};
-
-Mention.propTypes = {
-  /**
-   * Called when a new mention is added in the input
-   *
-   * Example:
-   *
-   * ```js
-   * function(id, display) {
-   *   console.log("user " + display + " was mentioned!");
-   * }
-   * ```
-   */
-  onAdd: PropTypes.func,
-  onRemove: PropTypes.func,
-  renderSuggestion: PropTypes.func,
-  trigger: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(RegExp)]),
-  markup: PropTypes.string,
-  displayTransform: PropTypes.func,
-
-  /**
-   * If set to `true` spaces will not interrupt matching suggestions
-   */
-  allowSpaceInQuery: PropTypes.bool,
-  isLoading: PropTypes.bool
-};
-Mention.defaultProps = {
-  trigger: '@',
-  markup: '@[__display__](__id__)',
-  displayTransform: function displayTransform(id, display) {
-    return display || id || '';
-  },
-  onAdd: function onAdd() {
-    return null;
-  },
-  onRemove: function onRemove() {
-    return null;
-  },
-  renderSuggestion: null,
-  isLoading: false,
-  appendSpaceOnAdd: false
-};
-
 var emptyFn = function emptyFn() {}; // Finds all occurrences of the markup in the value and calls the `markupIteratee` callback for each of them.
 // The optional `textIteratee` callback is called for each plain text ranges in between these markup occurrences.
 
@@ -161,8 +102,7 @@ var iterateMentionsMarkup = function iterateMentionsMarkup(value, config, markup
 
     var _ref2 = config[mentionChildIndex] || {},
         markup = _ref2.markup,
-        _ref2$displayTransfor = _ref2.displayTransform,
-        displayTransform = _ref2$displayTransfor === void 0 ? Mention.defaultProps.displayTransform : _ref2$displayTransfor;
+        displayTransform = _ref2.displayTransform;
 
     var idPos = offset + findPositionOfCapturingGroup(markup, 'id');
     var displayPos = offset + findPositionOfCapturingGroup(markup, 'display');
@@ -2196,5 +2136,29 @@ var styled$3 = createDefaultStyle({
   };
 });
 var MentionsInput$1 = styled$3(MentionsInput);
+
+var defaultStyle = {
+  fontWeight: 'inherit'
+};
+function Mention(_ref) {
+  var display = _ref.display,
+      style = _ref.style,
+      className = _ref.className,
+      classNames = _ref.classNames,
+      _ref$trigger = _ref.trigger,
+      _ref$markup = _ref.markup,
+      _ref$displayTransform = _ref.displayTransform,
+      _ref$onAdd = _ref.onAdd,
+      _ref$onRemove = _ref.onRemove,
+      _ref$renderSuggestion = _ref.renderSuggestion,
+      _ref$isLoading = _ref.isLoading,
+      _ref$appendSpaceOnAdd = _ref.appendSpaceOnAdd;
+  var styles = useStyles(defaultStyle, {
+    style: style,
+    className: className,
+    classNames: classNames
+  });
+  return /*#__PURE__*/React.createElement("strong", styles, display);
+}
 
 export { Mention, MentionsInput$1 as MentionsInput };
