@@ -15,7 +15,7 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
   display: "__display__"
 }, findPositionOfCapturingGroup = function(markup, parameterName) {
   invariant("id" === parameterName || "display" === parameterName, 'Second arg must be either "id" or "display", got: "'.concat(parameterName, '"'));
-  var indexDisplay = markup.indexOf(PLACEHOLDERS.display), indexId = markup.indexOf(PLACEHOLDERS.id);
+  var indexDisplay = (markup || "").indexOf(PLACEHOLDERS.display), indexId = (markup || "").indexOf(PLACEHOLDERS.id);
   return indexDisplay < 0 && (indexDisplay = null), indexId < 0 && (indexId = null), 
   invariant(null !== indexDisplay || null !== indexId, "The markup '".concat(markup, "' does not contain either of the placeholders '__id__' or '__display__'")), 
   null !== indexDisplay && null !== indexId ? "id" === parameterName && indexId <= indexDisplay || "display" === parameterName && indexDisplay <= indexId ? 0 : 1 : 0;
@@ -26,8 +26,8 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
     return invariant(!regexFlags, "RegExp flags are not supported. Change /".concat(regexString, "/").concat(regexFlags, " into /").concat(regexString, "/")), 
     "(".concat(regexString, ")");
   }).join("|"), "g");
-}, countPlaceholders = function(markup) {
-  var count = 0;
+}, countPlaceholders = function() {
+  var markup = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "", count = 0;
   return markup.indexOf("__id__") >= 0 && count++, markup.indexOf("__display__") >= 0 && count++, 
   count;
 }, emptyFn = function() {}, iterateMentionsMarkup = function(value, config, markupIteratee) {
@@ -106,8 +106,8 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
 }, getEndOfLastMention = function(value, config) {
   var mentions = getMentions(value, config), lastMention = mentions[mentions.length - 1];
   return lastMention ? lastMention.plainTextIndex + lastMention.display.length : 0;
-}, markupToRegex = function(markup) {
-  var escapedMarkup = escapeRegex(markup), charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length], charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
+}, markupToRegex = function() {
+  var markup = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "", escapedMarkup = escapeRegex(markup), charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length], charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
   return new RegExp(escapedMarkup.replace(PLACEHOLDERS.display, "([^".concat(escapeRegex(charAfterDisplay || ""), "]+?)")).replace(PLACEHOLDERS.id, "([^".concat(escapeRegex(charAfterId || ""), "]+?)")));
 }, readConfigFromChildren = function(children) {
   return React.Children.toArray(children).map(function(_ref) {

@@ -36,8 +36,8 @@ var PLACEHOLDERS = {
 var findPositionOfCapturingGroup = function findPositionOfCapturingGroup(markup, parameterName) {
   invariant(parameterName === 'id' || parameterName === 'display', "Second arg must be either \"id\" or \"display\", got: \"".concat(parameterName, "\"")); // find positions of placeholders in the markup
 
-  var indexDisplay = markup.indexOf(PLACEHOLDERS.display);
-  var indexId = markup.indexOf(PLACEHOLDERS.id); // set indices to null if not found
+  var indexDisplay = (markup || '').indexOf(PLACEHOLDERS.display);
+  var indexId = (markup || '').indexOf(PLACEHOLDERS.id); // set indices to null if not found
 
   if (indexDisplay < 0) indexDisplay = null;
   if (indexId < 0) indexId = null; // markup must contain one of the mandatory placeholders
@@ -66,7 +66,8 @@ var combineRegExps = function combineRegExps(regExps) {
   }).join('|'), 'g');
 };
 
-var countPlaceholders = function countPlaceholders(markup) {
+var countPlaceholders = function countPlaceholders() {
+  var markup = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   var count = 0;
   if (markup.indexOf('__id__') >= 0) count++;
   if (markup.indexOf('__display__') >= 0) count++;
@@ -300,7 +301,8 @@ var getEndOfLastMention = function getEndOfLastMention(value, config) {
   return lastMention ? lastMention.plainTextIndex + lastMention.display.length : 0;
 };
 
-var markupToRegex = function markupToRegex(markup) {
+var markupToRegex = function markupToRegex() {
+  var markup = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
   var escapedMarkup = escapeRegex(markup);
   var charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length];
   var charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
