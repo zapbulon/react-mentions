@@ -1,7 +1,7 @@
 import lettersDiacritics from './diacritics'
 
 const removeAccents = str => {
-  let formattedStr = str
+  let formattedStr = str || ''
 
   lettersDiacritics.forEach(letterDiacritics => {
     formattedStr = formattedStr.replace(
