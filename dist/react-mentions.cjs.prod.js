@@ -17,7 +17,6 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
   invariant("id" === parameterName || "display" === parameterName, 'Second arg must be either "id" or "display", got: "'.concat(parameterName, '"'));
   var indexDisplay = (markup || "").indexOf(PLACEHOLDERS.display), indexId = (markup || "").indexOf(PLACEHOLDERS.id);
   return indexDisplay < 0 && (indexDisplay = null), indexId < 0 && (indexId = null), 
-  invariant(null !== indexDisplay || null !== indexId, "The markup '".concat(markup, "' does not contain either of the placeholders '__id__' or '__display__'")), 
   null !== indexDisplay && null !== indexId ? "id" === parameterName && indexId <= indexDisplay || "display" === parameterName && indexDisplay <= indexId ? 0 : 1 : 0;
 }, combineRegExps = function(regExps) {
   var serializedRegexParser = /^\/(.+)\/(\w+)?$/;

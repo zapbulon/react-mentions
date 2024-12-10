@@ -32,9 +32,14 @@ var findPositionOfCapturingGroup = function findPositionOfCapturingGroup(markup,
   var indexId = (markup || '').indexOf(PLACEHOLDERS.id); // set indices to null if not found
 
   if (indexDisplay < 0) indexDisplay = null;
-  if (indexId < 0) indexId = null; // markup must contain one of the mandatory placeholders
-
-  invariant(indexDisplay !== null || indexId !== null, "The markup '".concat(markup, "' does not contain either of the placeholders '__id__' or '__display__'"));
+  if (indexId < 0) indexId = null;
+  /*
+  // markup must contain one of the mandatory placeholders
+  invariant(
+    indexDisplay !== null || indexId !== null,
+    `The markup '${markup}' does not contain either of the placeholders '__id__' or '__display__'`
+  )
+  */
 
   if (indexDisplay !== null && indexId !== null) {
     // both placeholders are used, return 0 or 1 depending on the position of the requested parameter
