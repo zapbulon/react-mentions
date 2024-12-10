@@ -301,8 +301,8 @@ var getEndOfLastMention = function getEndOfLastMention(value, config) {
   return lastMention ? lastMention.plainTextIndex + lastMention.display.length : 0;
 };
 
-var markupToRegex = function markupToRegex() {
-  var markup = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+var markupToRegex = function markupToRegex(m) {
+  var markup = m || '';
   var escapedMarkup = escapeRegex(markup);
   var charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length];
   var charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];

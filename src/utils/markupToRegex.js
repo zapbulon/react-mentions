@@ -1,7 +1,8 @@
 import PLACEHOLDERS from './placeholders'
 import escapeRegex from './escapeRegex'
 
-const markupToRegex = (markup = '') => {
+const markupToRegex = (m) => {
+    const markup = m || ''
     const escapedMarkup = escapeRegex(markup)
 
     const charAfterDisplay =

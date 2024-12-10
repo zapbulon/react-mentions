@@ -106,8 +106,8 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
 }, getEndOfLastMention = function(value, config) {
   var mentions = getMentions(value, config), lastMention = mentions[mentions.length - 1];
   return lastMention ? lastMention.plainTextIndex + lastMention.display.length : 0;
-}, markupToRegex = function() {
-  var markup = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : "", escapedMarkup = escapeRegex(markup), charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length], charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
+}, markupToRegex = function(m) {
+  var markup = m || "", escapedMarkup = escapeRegex(markup), charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length], charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
   return new RegExp(escapedMarkup.replace(PLACEHOLDERS.display, "([^".concat(escapeRegex(charAfterDisplay || ""), "]+?)")).replace(PLACEHOLDERS.id, "([^".concat(escapeRegex(charAfterId || ""), "]+?)")));
 }, readConfigFromChildren = function(children) {
   return React.Children.toArray(children).map(function(_ref) {
