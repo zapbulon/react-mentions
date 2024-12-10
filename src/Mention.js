@@ -46,7 +46,7 @@ Mention.defaultProps = {
   trigger: '@',
   markup: '@[__display__](__id__)',
   displayTransform: function(id, display) {
-    return display || id
+    return display || id || ''
   },
   onAdd: () => null,
   onRemove: () => null,

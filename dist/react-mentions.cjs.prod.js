@@ -53,7 +53,7 @@ Mention.propTypes = {
   trigger: "@",
   markup: "@[__display__](__id__)",
   displayTransform: function(id, display) {
-    return display || id;
+    return display || id || "";
   },
   onAdd: function() {
     return null;
