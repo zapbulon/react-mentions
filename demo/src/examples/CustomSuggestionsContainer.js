@@ -2,11 +2,10 @@ import React from 'react'
 
 import { Mention, MentionsInput } from '../../../src'
 
-import { provideExampleValue } from './higher-order'
 import defaultStyle from './defaultStyle'
 import defaultMentionStyle from './defaultMentionStyle'
 
-function CustomSuggestionsContainer({ value, data, onChange, onAdd }) {
+export default function CustomSuggestionsContainer({ value, data, onChange, onAdd }) {
   return (
     <div className="custom-suggestions">
       <h3>Custom Suggestions Container</h3>
@@ -25,7 +24,3 @@ function CustomSuggestionsContainer({ value, data, onChange, onAdd }) {
     </div>
   )
 }
-
-const asExample = provideExampleValue('')
-
-export default asExample(CustomSuggestionsContainer)

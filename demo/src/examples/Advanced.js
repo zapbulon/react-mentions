@@ -1,9 +1,6 @@
 import React from 'react'
-import { compose, withHandlers } from 'recompose'
 
 import { MentionsInput, Mention } from '../../../src'
-
-import { provideExampleValue } from './higher-order'
 
 import defaultStyle from './defaultStyle'
 import defaultMentionStyle from './defaultMentionStyle'
@@ -21,7 +18,7 @@ const style = merge({}, defaultStyle, {
   },
 })
 
-function Advanced({ value, data, onChange, onBlur, onAdd }) {
+export default function Advanced({ value, data, onChange, onBlur, onAdd }) {
   let inputEl = React.createRef()
   return (
     <div className="advanced">
@@ -54,14 +51,3 @@ function Advanced({ value, data, onChange, onBlur, onAdd }) {
     </div>
   )
 }
-
-export default compose(
-  provideExampleValue('Hi {{johndoe}}!'),
-  withHandlers({
-    onBlur: () => (ev, clickedOnSuggestion) => {
-      if (!clickedOnSuggestion) {
-        console.log('finished editing')
-      }
-    },
-  })
-)(Advanced)

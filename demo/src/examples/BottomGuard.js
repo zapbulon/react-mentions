@@ -1,12 +1,11 @@
 import React from 'react'
 import { Mention, MentionsInput } from '../../../src'
 
-import { provideExampleValue } from './higher-order'
 import defaultStyle from './defaultStyle'
 import defaultMentionStyle from './defaultMentionStyle'
 let container
 
-function BottomGuard({ value, data, onChange, onAdd }) {
+export default function BottomGuard({ value, data, onChange, onAdd }) {
   return (
     <div
       id="suggestionPortal"
@@ -79,7 +78,3 @@ function BottomGuard({ value, data, onChange, onAdd }) {
     </div>
   )
 }
-
-const asExample = provideExampleValue('')
-
-export default asExample(BottomGuard)

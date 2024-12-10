@@ -2,12 +2,11 @@ import React from 'react'
 import { merge } from '../../../src/utils'
 import { Mention, MentionsInput } from '../../../src'
 
-import { provideExampleValue } from './higher-order'
 import defaultStyle from './defaultStyle'
 import defaultMentionStyle from './defaultMentionStyle'
 let container
 
-function SuggestionPortal({ value, data, onChange, onAdd }) {
+export default function SuggestionPortal({ value, data, onChange, onAdd }) {
   let scrollableStyle = merge({}, defaultStyle, {
     input: {
       overflow: 'auto',
@@ -65,7 +64,3 @@ function SuggestionPortal({ value, data, onChange, onAdd }) {
     </div>
   )
 }
-
-const asExample = provideExampleValue('')
-
-export default asExample(SuggestionPortal)

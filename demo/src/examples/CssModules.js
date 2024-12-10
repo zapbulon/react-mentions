@@ -2,11 +2,9 @@ import React from 'react'
 
 import { MentionsInput, Mention } from '../../../src'
 
-import { provideExampleValue } from './higher-order'
-
 import classNames from './example.module.css'
 
-function CssModules({ value, data, onChange }) {
+export default function CssModules({ value, data, onChange }) {
   return (
     <div className="advanced">
       <h3>Styling with css modules</h3>
@@ -23,5 +21,3 @@ function CssModules({ value, data, onChange }) {
     </div>
   )
 }
-
-export default provideExampleValue('Hi @[John Doe](johndoe)')(CssModules)
