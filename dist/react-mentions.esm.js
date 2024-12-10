@@ -171,7 +171,6 @@ var iterateMentionsMarkup = function iterateMentionsMarkup(value, config, markup
     var substr = value.substring(start, match.index);
     textIteratee(substr, start, currentPlainTextIndex);
     currentPlainTextIndex += substr.length;
-    console.log(value, regex, match, start);
     markupIteratee(match[0], match.index, currentPlainTextIndex, id, display, mentionChildIndex, start);
     currentPlainTextIndex += display.length;
     start = regex.lastIndex;
@@ -818,6 +817,7 @@ function Highlighter(_ref) {
   };
 
   var config = readConfigFromChildren(children);
+  console.log('config:', config);
   var caretPositionInMarkup;
 
   if (selectionEnd === selectionStart) {

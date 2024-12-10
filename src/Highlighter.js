@@ -56,6 +56,8 @@ function Highlighter({
   }
 
   const config = readConfigFromChildren(children)
+
+  console.log('config:', config)
   let caretPositionInMarkup
 
   if (selectionEnd === selectionStart) {

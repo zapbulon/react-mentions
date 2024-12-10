@@ -42,8 +42,6 @@ const iterateMentionsMarkup = (
     textIteratee(substr, start, currentPlainTextIndex);
     currentPlainTextIndex += substr.length;
 
-console.log(value, regex, match, start)
-
     markupIteratee(
       match[0],
       match.index,
