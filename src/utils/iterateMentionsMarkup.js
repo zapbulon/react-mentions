@@ -30,16 +30,16 @@ const iterateMentionsMarkup = (
   while ((match = regex.exec(value)) !== null) {
     const offset = captureGroupOffsets.find(o => !!match[o]) // eslint-disable-line no-loop-func
     const mentionChildIndex = captureGroupOffsets.indexOf(offset)
-    const { markup, displayTransform } = config[mentionChildIndex]
-    const idPos = offset + findPositionOfCapturingGroup(markup, 'id')
-    const displayPos = offset + findPositionOfCapturingGroup(markup, 'display')
+    const { markup, displayTransform } = config[mentionChildIndex] || {};
+    const idPos = offset + findPositionOfCapturingGroup(markup, 'id');
+    const displayPos = offset + findPositionOfCapturingGroup(markup, 'display');
 
-    const id = match[idPos]
-    const display = displayTransform(id, match[displayPos])
+    const id = match[idPos];
+    const display = displayTransform(id, match[displayPos]);
 
-    let substr = value.substring(start, match.index)
-    textIteratee(substr, start, currentPlainTextIndex)
-    currentPlainTextIndex += substr.length
+    let substr = value.substring(start, match.index);
+    textIteratee(substr, start, currentPlainTextIndex);
+    currentPlainTextIndex += substr.length;
 
     markupIteratee(
       match[0],

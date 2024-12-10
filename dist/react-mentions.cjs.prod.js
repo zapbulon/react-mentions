@@ -39,7 +39,7 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
   }), start = 0, currentPlainTextIndex = 0; null !== (match = regex.exec(value)); ) {
     var offset = captureGroupOffsets.find(function(o) {
       return !!match[o];
-    }), mentionChildIndex = captureGroupOffsets.indexOf(offset), _config$mentionChildI = config[mentionChildIndex], markup = _config$mentionChildI.markup, displayTransform = _config$mentionChildI.displayTransform, idPos = offset + findPositionOfCapturingGroup(markup, "id"), displayPos = offset + findPositionOfCapturingGroup(markup, "display"), id = match[idPos], display = displayTransform(id, match[displayPos]), substr = value.substring(start, match.index);
+    }), mentionChildIndex = captureGroupOffsets.indexOf(offset), _ref2 = config[mentionChildIndex] || {}, markup = _ref2.markup, displayTransform = _ref2.displayTransform, idPos = offset + findPositionOfCapturingGroup(markup, "id"), displayPos = offset + findPositionOfCapturingGroup(markup, "display"), id = match[idPos], display = displayTransform(id, match[displayPos]), substr = value.substring(start, match.index);
     textIteratee(substr, start, currentPlainTextIndex), currentPlainTextIndex += substr.length, 
     markupIteratee(match[0], match.index, currentPlainTextIndex, id, display, mentionChildIndex, start), 
     currentPlainTextIndex += display.length, start = regex.lastIndex;

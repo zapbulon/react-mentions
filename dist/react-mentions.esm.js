@@ -94,9 +94,11 @@ var iterateMentionsMarkup = function iterateMentionsMarkup(value, config, markup
     }); // eslint-disable-line no-loop-func
 
     var mentionChildIndex = captureGroupOffsets.indexOf(offset);
-    var _config$mentionChildI = config[mentionChildIndex],
-        markup = _config$mentionChildI.markup,
-        displayTransform = _config$mentionChildI.displayTransform;
+
+    var _ref2 = config[mentionChildIndex] || {},
+        markup = _ref2.markup,
+        displayTransform = _ref2.displayTransform;
+
     var idPos = offset + findPositionOfCapturingGroup(markup, 'id');
     var displayPos = offset + findPositionOfCapturingGroup(markup, 'display');
     var id = match[idPos];
