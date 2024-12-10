@@ -384,7 +384,9 @@ var readConfigFromChildren = function readConfigFromChildren(children) {
   });
   console.log('-----------------------');
   console.log(children);
-  console.log(Children.toArray(children));
+  console.log(Children.toArray(children).map(function (a) {
+    return console.log(a);
+  }));
   console.log(config);
   return config;
 }; // make sure that the custom regex defines the correct number of capturing groups

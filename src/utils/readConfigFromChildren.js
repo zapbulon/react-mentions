@@ -16,7 +16,7 @@ const readConfigFromChildren = children => {
 
   console.log('-----------------------')
   console.log(children)
-  console.log( Children.toArray(children))
+  console.log( Children.toArray(children).map(a => console.log(a)))
   console.log(config)
 
   return config;
