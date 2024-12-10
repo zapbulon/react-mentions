@@ -29,7 +29,7 @@ describe('#iterateMentionsMarkup', () => {
 
   it('should call the `markupIteratee` for every markup occurrence', () => {
     const markupIteratee = jest.fn()
-    iterateMentionsMarkup(value, config, markupIteratee)
+    iterateMentionsMarkup(value || '', config, markupIteratee)
 
     expect(markupIteratee.mock.calls.length).toEqual(2)
     expect(markupIteratee).toHaveBeenCalledWith(

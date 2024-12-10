@@ -133,7 +133,7 @@ function Highlighter({
     )
   }
 
-  iterateMentionsMarkup(value, config, mentionIteratee, textIteratee)
+  iterateMentionsMarkup(value || '', config, mentionIteratee, textIteratee)
 
   // append a span containing a space, to ensure the last text line has the correct height
   components.push(' ')

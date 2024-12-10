@@ -3,7 +3,7 @@ import iterateMentionsMarkup from './iterateMentionsMarkup'
 const getMentions = (value, config) => {
   const mentions = []
   iterateMentionsMarkup(
-    value,
+    value || '',
     config,
     (match, index, plainTextIndex, id, display, childIndex, start) => {
       mentions.push({
