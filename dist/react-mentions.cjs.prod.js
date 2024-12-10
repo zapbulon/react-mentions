@@ -83,7 +83,7 @@ var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, mar
   start < value.length && textIteratee(value.substring(start), start, currentPlainTextIndex);
 }, getPlainText = function(value, config) {
   var result = "";
-  return iterateMentionsMarkup(value, config, function(match, index, plainTextIndex, id, display) {
+  return iterateMentionsMarkup(value || "", config, function(match, index, plainTextIndex, id, display) {
     result += display;
   }, function(plainText) {
     result += plainText;
@@ -91,7 +91,7 @@ var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, mar
 }, mapPlainTextIndex = function(value, config, indexInPlainText) {
   var result, inMarkupCorrection = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : "START";
   if ("number" != typeof indexInPlainText) return indexInPlainText;
-  return iterateMentionsMarkup(value, config, function(markup, index, mentionPlainTextIndex, id, display, childIndex, lastMentionEndIndex) {
+  return iterateMentionsMarkup(value || "", config, function(markup, index, mentionPlainTextIndex, id, display, childIndex, lastMentionEndIndex) {
     void 0 === result && mentionPlainTextIndex + display.length > indexInPlainText && (result = "NULL" === inMarkupCorrection ? null : index + ("END" === inMarkupCorrection ? markup.length : 0));
   }, function(substr, index, substrPlainTextIndex) {
     void 0 === result && substrPlainTextIndex + substr.length >= indexInPlainText && (result = index + indexInPlainText - substrPlainTextIndex);
@@ -118,13 +118,13 @@ var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, mar
   return newValue;
 }, findStartOfMentionInPlainText = function(value, config, indexInPlainText) {
   var result = indexInPlainText, foundMention = !1;
-  if (iterateMentionsMarkup(value, config, function(markup, index, mentionPlainTextIndex, id, display, childIndex, lastMentionEndIndex) {
+  if (iterateMentionsMarkup(value || "", config, function(markup, index, mentionPlainTextIndex, id, display, childIndex, lastMentionEndIndex) {
     mentionPlainTextIndex <= indexInPlainText && mentionPlainTextIndex + display.length > indexInPlainText && (result = mentionPlainTextIndex, 
     foundMention = !0);
   }), foundMention) return result;
 }, getMentions = function(value, config) {
   var mentions = [];
-  return iterateMentionsMarkup(value, config, function(match, index, plainTextIndex, id, display, childIndex, start) {
+  return iterateMentionsMarkup(value || "", config, function(match, index, plainTextIndex, id, display, childIndex, start) {
     mentions.push({
       id: id,
       display: display,
@@ -538,7 +538,7 @@ function Highlighter(_ref) {
     }, child = React.Children.toArray(children)[mentionChildIndex];
     return React__default.cloneElement(child, props);
   };
-  return iterateMentionsMarkup(value, config, function(markup, index, indexInPlainText, id, display, mentionChildIndex, lastMentionEndIndex) {
+  return iterateMentionsMarkup(value || "", config, function(markup, index, indexInPlainText, id, display, mentionChildIndex, lastMentionEndIndex) {
     var key = _generateComponentKey(componentKeys, id);
     components.push(getMentionComponentForMatch(id, display, mentionChildIndex, key));
   }, function(substr, index, indexInPlainText) {

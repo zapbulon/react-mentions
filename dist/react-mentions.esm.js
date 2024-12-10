@@ -183,7 +183,7 @@ var iterateMentionsMarkup = function iterateMentionsMarkup(value, config, markup
 
 var getPlainText = function getPlainText(value, config) {
   var result = '';
-  iterateMentionsMarkup(value, config, function (match, index, plainTextIndex, id, display) {
+  iterateMentionsMarkup(value || '', config, function (match, index, plainTextIndex, id, display) {
     result += display;
   }, function (plainText) {
     result += plainText;
@@ -231,7 +231,7 @@ var mapPlainTextIndex = function mapPlainTextIndex(value, config, indexInPlainTe
     }
   };
 
-  iterateMentionsMarkup(value, config, markupIteratee, textIteratee); // when a mention is at the end of the value and we want to get the caret position
+  iterateMentionsMarkup(value || '', config, markupIteratee, textIteratee); // when a mention is at the end of the value and we want to get the caret position
   // at the end of the string, result is undefined
 
   return result === undefined ? value.length : result;
@@ -322,7 +322,7 @@ var findStartOfMentionInPlainText = function findStartOfMentionInPlainText(value
     }
   };
 
-  iterateMentionsMarkup(value, config, markupIteratee);
+  iterateMentionsMarkup(value || '', config, markupIteratee);
 
   if (foundMention) {
     return result;
@@ -331,7 +331,7 @@ var findStartOfMentionInPlainText = function findStartOfMentionInPlainText(value
 
 var getMentions = function getMentions(value, config) {
   var mentions = [];
-  iterateMentionsMarkup(value, config, function (match, index, plainTextIndex, id, display, childIndex, start) {
+  iterateMentionsMarkup(value || '', config, function (match, index, plainTextIndex, id, display, childIndex, start) {
     mentions.push({
       id: id,
       display: display,
@@ -873,7 +873,7 @@ function Highlighter(_ref) {
     }), children);
   };
 
-  iterateMentionsMarkup(value, config, mentionIteratee, textIteratee); // append a span containing a space, to ensure the last text line has the correct height
+  iterateMentionsMarkup(value || '', config, mentionIteratee, textIteratee); // append a span containing a space, to ensure the last text line has the correct height
 
   components.push(' ');
 
