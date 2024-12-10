@@ -2,15 +2,25 @@ import { Children } from 'react'
 import invariant from 'invariant'
 import markupToRegex from './markupToRegex'
 import countPlaceholders from './countPlaceholders'
+import { DEFAULT_MENTION_PROPS } from '../Mention'
 
 const readConfigFromChildren = children => {
-  const config = Children.toArray(children).map(
-    ({ props: { markup, regex, displayTransform } }) => ({
-      markup,
+  const config = Children.toArray(children)
+    .filter(c => !!c && c.props != [undefined])
+    .map(
+    ({
+      props: {
+        markup = DEFAULT_MENTION_PROPS.markup,
+        regex = DEFAULT_MENTION_PROPS.regex,
+        displayTransform = DEFAULT_MENTION_PROPS.displayTransform
+      }
+    }) => ({
+      ...DEFAULT_MENTION_PROPS,
+      markup: markup,
+      displayTransform: displayTransform,
       regex: regex
         ? coerceCapturingGroups(regex, markup)
         : markupToRegex(markup),
-      displayTransform: displayTransform || ((id, display) => display || id),
     })
   );
 

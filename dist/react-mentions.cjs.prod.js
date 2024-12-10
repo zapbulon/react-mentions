@@ -8,7 +8,7 @@ Object.defineProperty(exports, "__esModule", {
   value: !0
 });
 
-var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsumableArray")), _extends = _interopDefault(require("@babel/runtime/helpers/extends")), _classCallCheck = _interopDefault(require("@babel/runtime/helpers/classCallCheck")), _createClass = _interopDefault(require("@babel/runtime/helpers/createClass")), _assertThisInitialized = _interopDefault(require("@babel/runtime/helpers/assertThisInitialized")), _inherits = _interopDefault(require("@babel/runtime/helpers/inherits")), _possibleConstructorReturn = _interopDefault(require("@babel/runtime/helpers/possibleConstructorReturn")), _getPrototypeOf = _interopDefault(require("@babel/runtime/helpers/getPrototypeOf")), _defineProperty = _interopDefault(require("@babel/runtime/helpers/defineProperty")), React = require("react"), React__default = _interopDefault(React), invariant = _interopDefault(require("invariant")), _slicedToArray = _interopDefault(require("@babel/runtime/helpers/slicedToArray")), _objectWithoutProperties = _interopDefault(require("@babel/runtime/helpers/objectWithoutProperties")), useStyles = require("substyle"), useStyles__default = _interopDefault(useStyles), PropTypes = _interopDefault(require("prop-types")), ReactDOM = _interopDefault(require("react-dom")), escapeRegex = function(str) {
+var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsumableArray")), _extends = _interopDefault(require("@babel/runtime/helpers/extends")), _classCallCheck = _interopDefault(require("@babel/runtime/helpers/classCallCheck")), _createClass = _interopDefault(require("@babel/runtime/helpers/createClass")), _assertThisInitialized = _interopDefault(require("@babel/runtime/helpers/assertThisInitialized")), _inherits = _interopDefault(require("@babel/runtime/helpers/inherits")), _possibleConstructorReturn = _interopDefault(require("@babel/runtime/helpers/possibleConstructorReturn")), _getPrototypeOf = _interopDefault(require("@babel/runtime/helpers/getPrototypeOf")), _defineProperty = _interopDefault(require("@babel/runtime/helpers/defineProperty")), React = require("react"), React__default = _interopDefault(React), invariant = _interopDefault(require("invariant")), _slicedToArray = _interopDefault(require("@babel/runtime/helpers/slicedToArray")), useStyles = require("substyle"), useStyles__default = _interopDefault(useStyles), _objectWithoutProperties = _interopDefault(require("@babel/runtime/helpers/objectWithoutProperties")), PropTypes = _interopDefault(require("prop-types")), ReactDOM = _interopDefault(require("react-dom")), escapeRegex = function(str) {
   return (str || "").replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }, PLACEHOLDERS = {
   id: "__id__",
@@ -108,16 +108,69 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
 }, markupToRegex = function(m) {
   var markup = m || "", escapedMarkup = escapeRegex(markup), charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length], charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
   return new RegExp(escapedMarkup.replace(PLACEHOLDERS.display, "([^".concat(escapeRegex(charAfterDisplay || ""), "]+?)")).replace(PLACEHOLDERS.id, "([^".concat(escapeRegex(charAfterId || ""), "]+?)")));
-}, readConfigFromChildren = function(children) {
-  var config = React.Children.toArray(children).map(function(_ref) {
-    var _ref$props = _ref.props, markup = _ref$props.markup, regex = _ref$props.regex, displayTransform = _ref$props.displayTransform;
-    return {
+}, DEFAULT_MENTION_PROPS = {
+  trigger: "@",
+  markup: "@[__display__](__id__)",
+  displayTransform: function(id, display) {
+    return display || id || "";
+  },
+  onAdd: function() {
+    return null;
+  },
+  onRemove: function() {
+    return null;
+  },
+  renderSuggestion: null,
+  isLoading: !1,
+  appendSpaceOnAdd: !1
+}, defaultStyle = {
+  fontWeight: "inherit"
+};
+
+function Mention(_ref) {
+  var display = _ref.display, style = _ref.style, className = _ref.className, classNames = _ref.classNames, styles = (_ref.trigger, 
+  _ref.markup, _ref.displayTransform, _ref.onAdd, _ref.onRemove, _ref.renderSuggestion, 
+  _ref.isLoading, _ref.appendSpaceOnAdd, useStyles__default(defaultStyle, {
+    style: style,
+    className: className,
+    classNames: classNames
+  }));
+  return React__default.createElement("strong", styles, display);
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly && (symbols = symbols.filter(function(sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    })), keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+      _defineProperty(target, key, source[key]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+    });
+  }
+  return target;
+}
+
+var readConfigFromChildren = function(children) {
+  var config = React.Children.toArray(children).filter(function(c) {
+    return !!c && c.props != [ void 0 ];
+  }).map(function(_ref) {
+    var _ref$props = _ref.props, _ref$props$markup = _ref$props.markup, markup = void 0 === _ref$props$markup ? DEFAULT_MENTION_PROPS.markup : _ref$props$markup, _ref$props$regex = _ref$props.regex, regex = void 0 === _ref$props$regex ? DEFAULT_MENTION_PROPS.regex : _ref$props$regex, _ref$props$displayTra = _ref$props.displayTransform, displayTransform = void 0 === _ref$props$displayTra ? DEFAULT_MENTION_PROPS.displayTransform : _ref$props$displayTra;
+    return _objectSpread(_objectSpread({}, DEFAULT_MENTION_PROPS), {}, {
       markup: markup,
-      regex: regex ? coerceCapturingGroups(regex, markup) : markupToRegex(markup),
-      displayTransform: displayTransform || function(id, display) {
-        return display || id;
-      }
-    };
+      displayTransform: displayTransform,
+      regex: regex ? coerceCapturingGroups(regex, markup) : markupToRegex(markup)
+    });
   });
   return console.log("-----------------------"), console.log(children), console.log("+++++++++++++++++++++++"), 
   console.log(React.Children.toArray(children).filter(function(a) {
@@ -425,7 +478,7 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
   }, {});
 }, _excluded = [ "style", "className", "classNames" ];
 
-function ownKeys(object, enumerableOnly) {
+function ownKeys$1(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
@@ -436,12 +489,12 @@ function ownKeys(object, enumerableOnly) {
   return keys;
 }
 
-function _objectSpread(target) {
+function _objectSpread$1(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
-    i % 2 ? ownKeys(Object(source), !0).forEach(function(key) {
+    i % 2 ? ownKeys$1(Object(source), !0).forEach(function(key) {
       _defineProperty(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function(key) {
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function(key) {
       Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
     });
   }
@@ -462,7 +515,7 @@ function createDefaultStyle(defaultStyle, getModifiers) {
     }, displayName = ComponentToWrap.displayName || ComponentToWrap.name || "Component";
     return DefaultStyleEnhancer.displayName = "defaultStyle(".concat(displayName, ")"), 
     React__default.forwardRef(function(props, ref) {
-      return DefaultStyleEnhancer(_objectSpread(_objectSpread({}, props), {}, {
+      return DefaultStyleEnhancer(_objectSpread$1(_objectSpread$1({}, props), {}, {
         ref: ref
       }));
     });
@@ -707,7 +760,7 @@ var styled$2 = createDefaultStyle({
   }
 }), SuggestionsOverlay$1 = styled$2(SuggestionsOverlay);
 
-function ownKeys$1(object, enumerableOnly) {
+function ownKeys$2(object, enumerableOnly) {
   var keys = Object.keys(object);
   if (Object.getOwnPropertySymbols) {
     var symbols = Object.getOwnPropertySymbols(object);
@@ -718,12 +771,12 @@ function ownKeys$1(object, enumerableOnly) {
   return keys;
 }
 
-function _objectSpread$1(target) {
+function _objectSpread$2(target) {
   for (var i = 1; i < arguments.length; i++) {
     var source = null != arguments[i] ? arguments[i] : {};
-    i % 2 ? ownKeys$1(Object(source), !0).forEach(function(key) {
+    i % 2 ? ownKeys$2(Object(source), !0).forEach(function(key) {
       _defineProperty(target, key, source[key]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function(key) {
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$2(Object(source)).forEach(function(key) {
       Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
     });
   }
@@ -802,7 +855,7 @@ var makeTriggerRegex = function(trigger) {
       _this.containerElement = el;
     }), _defineProperty(_assertThisInitialized(_this), "getInputProps", function() {
       var _this$props = _this.props, readOnly = _this$props.readOnly, disabled = _this$props.disabled, style = _this$props.style;
-      return _objectSpread$1(_objectSpread$1(_objectSpread$1(_objectSpread$1({}, omit(_this.props, [ "style", "classNames", "className" ], keys(propTypes))), style("input")), {}, {
+      return _objectSpread$2(_objectSpread$2(_objectSpread$2(_objectSpread$2({}, omit(_this.props, [ "style", "classNames", "className" ], keys(propTypes))), style("input")), {}, {
         value: _this.getPlainText(),
         onScroll: _this.updateHighlighterScroll
       }, !readOnly && !disabled && {
@@ -1046,7 +1099,7 @@ var makeTriggerRegex = function(trigger) {
       syncResult instanceof Array && _this.updateSuggestions(_this._queryId, childIndex, query, querySequenceStart, querySequenceEnd, plainTextValue, syncResult);
     }), _defineProperty(_assertThisInitialized(_this), "updateSuggestions", function(queryId, childIndex, query, querySequenceStart, querySequenceEnd, plainTextValue, results) {
       if (queryId === _this._queryId) {
-        _this.suggestions = _objectSpread$1(_objectSpread$1({}, _this.suggestions), {}, _defineProperty({}, childIndex, {
+        _this.suggestions = _objectSpread$2(_objectSpread$2({}, _this.suggestions), {}, _defineProperty({}, childIndex, {
           queryInfo: {
             childIndex: childIndex,
             query: query,
@@ -1137,7 +1190,7 @@ var makeTriggerRegex = function(trigger) {
       if (event.target === this.inputElement && this.supportsClipboardActions(event)) {
         event.preventDefault();
         var _this$state3 = this.state, selectionStart = _this$state3.selectionStart, selectionEnd = _this$state3.selectionEnd, _this$props7 = this.props, value = _this$props7.value, children = _this$props7.children, config = readConfigFromChildren(children), markupStartIndex = mapPlainTextIndex(value, config, selectionStart, "START"), markupEndIndex = mapPlainTextIndex(value, config, selectionEnd, "END"), pastedMentions = event.clipboardData.getData("text/react-mentions"), pastedData = event.clipboardData.getData("text/plain"), newValue = spliceString(value, markupStartIndex, markupEndIndex, pastedMentions || pastedData).replace(/\r/g, ""), newPlainTextValue = getPlainText(newValue, config), eventMock = {
-          target: _objectSpread$1(_objectSpread$1({}, event.target), {}, {
+          target: _objectSpread$2(_objectSpread$2({}, event.target), {}, {
             value: newValue
           })
         };
@@ -1174,7 +1227,7 @@ var makeTriggerRegex = function(trigger) {
       if (event.target === this.inputElement && this.supportsClipboardActions(event)) {
         event.preventDefault(), this.saveSelectionToClipboard(event);
         var _this$state4 = this.state, selectionStart = _this$state4.selectionStart, selectionEnd = _this$state4.selectionEnd, _this$props9 = this.props, children = _this$props9.children, value = _this$props9.value, config = readConfigFromChildren(children), markupStartIndex = mapPlainTextIndex(value, config, selectionStart, "START"), markupEndIndex = mapPlainTextIndex(value, config, selectionEnd, "END"), newValue = [ value.slice(0, markupStartIndex), value.slice(markupEndIndex) ].join(""), newPlainTextValue = getPlainText(newValue, config), eventMock = {
-          target: _objectSpread$1(_objectSpread$1({}, event.target), {}, {
+          target: _objectSpread$2(_objectSpread$2({}, event.target), {}, {
             value: newPlainTextValue
           })
         };
@@ -1219,7 +1272,7 @@ var getComputedStyleLengthProp = function(forElement, propertyName) {
     letterSpacing: "inherit"
   },
   "&multiLine": {
-    input: _objectSpread$1({
+    input: _objectSpread$2({
       height: "100%",
       bottom: 0,
       overflow: "hidden",
@@ -1235,19 +1288,6 @@ var getComputedStyleLengthProp = function(forElement, propertyName) {
     "&singleLine": singleLine,
     "&multiLine": !singleLine
   };
-}), MentionsInput$1 = styled$3(MentionsInput), defaultStyle = {
-  fontWeight: "inherit"
-};
-
-function Mention(_ref) {
-  var display = _ref.display, style = _ref.style, className = _ref.className, classNames = _ref.classNames, styles = (_ref.trigger, 
-  _ref.markup, _ref.displayTransform, _ref.onAdd, _ref.onRemove, _ref.renderSuggestion, 
-  _ref.isLoading, _ref.appendSpaceOnAdd, useStyles__default(defaultStyle, {
-    style: style,
-    className: className,
-    classNames: classNames
-  }));
-  return React__default.createElement("strong", styles, display);
-}
+}), MentionsInput$1 = styled$3(MentionsInput);
 
 exports.Mention = Mention, exports.MentionsInput = MentionsInput$1;
