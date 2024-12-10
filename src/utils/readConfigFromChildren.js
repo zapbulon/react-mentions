@@ -17,7 +17,7 @@ const readConfigFromChildren = children => {
   console.log('-----------------------')
   console.log(children)
   console.log('+++++++++++++++++++++++')
-  console.log( Children.toArray(children).map(a => console.log(a)))
+  console.log( Children.toArray(children).filter(a => !!a).map(a => console.log(a.props)))
   console.log('.......................')
 
   console.log('config:', config)

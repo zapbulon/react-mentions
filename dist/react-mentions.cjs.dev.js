@@ -393,8 +393,10 @@ var readConfigFromChildren = function readConfigFromChildren(children) {
   console.log('-----------------------');
   console.log(children);
   console.log('+++++++++++++++++++++++');
-  console.log(React.Children.toArray(children).map(function (a) {
-    return console.log(a);
+  console.log(React.Children.toArray(children).filter(function (a) {
+    return !!a;
+  }).map(function (a) {
+    return console.log(a.props);
   }));
   console.log('.......................');
   console.log('config:', config);

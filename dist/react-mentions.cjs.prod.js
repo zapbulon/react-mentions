@@ -157,8 +157,10 @@ var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, mar
     };
   });
   return console.log("-----------------------"), console.log(children), console.log("+++++++++++++++++++++++"), 
-  console.log(React.Children.toArray(children).map(function(a) {
-    return console.log(a);
+  console.log(React.Children.toArray(children).filter(function(a) {
+    return !!a;
+  }).map(function(a) {
+    return console.log(a.props);
   })), console.log("......................."), console.log("config:", config), config;
 }, coerceCapturingGroups = function(regex, markup) {
   var numberOfGroups = new RegExp(regex.toString() + "|").exec("").length - 1, numberOfPlaceholders = countPlaceholders(markup);
