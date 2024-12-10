@@ -384,10 +384,12 @@ var readConfigFromChildren = function readConfigFromChildren(children) {
   });
   console.log('-----------------------');
   console.log(children);
+  console.log('+++++++++++++++++++++++');
   console.log(Children.toArray(children).map(function (a) {
     return console.log(a);
   }));
-  console.log(config);
+  console.log('.......................');
+  console.log('config:', config);
   return config;
 }; // make sure that the custom regex defines the correct number of capturing groups
 
