@@ -75,7 +75,7 @@ var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, mar
   }), start = 0, currentPlainTextIndex = 0; null !== (match = regex.exec(value)); ) {
     var offset = captureGroupOffsets.find(function(o) {
       return !!match[o];
-    }), mentionChildIndex = captureGroupOffsets.indexOf(offset), _ref2 = config[mentionChildIndex] || {}, markup = _ref2.markup, _ref2$displayTransfor = _ref2.displayTransform, displayTransform = void 0 === _ref2$displayTransfor ? Mention.defaultProps.defaultProps : _ref2$displayTransfor, idPos = offset + findPositionOfCapturingGroup(markup, "id"), displayPos = offset + findPositionOfCapturingGroup(markup, "display"), id = match[idPos], display = displayTransform(id, match[displayPos]), substr = value.substring(start, match.index);
+    }), mentionChildIndex = captureGroupOffsets.indexOf(offset), _ref2 = config[mentionChildIndex] || {}, markup = _ref2.markup, _ref2$displayTransfor = _ref2.displayTransform, displayTransform = void 0 === _ref2$displayTransfor ? Mention.defaultProps.displayTransform : _ref2$displayTransfor, idPos = offset + findPositionOfCapturingGroup(markup, "id"), displayPos = offset + findPositionOfCapturingGroup(markup, "display"), id = match[idPos], display = displayTransform(id, match[displayPos]), substr = value.substring(start, match.index);
     textIteratee(substr, start, currentPlainTextIndex), currentPlainTextIndex += substr.length, 
     markupIteratee(match[0], match.index, currentPlainTextIndex, id, display, mentionChildIndex, start), 
     currentPlainTextIndex += display.length, start = regex.lastIndex;

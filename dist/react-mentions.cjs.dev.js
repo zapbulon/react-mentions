@@ -170,7 +170,7 @@ var iterateMentionsMarkup = function iterateMentionsMarkup(value, config, markup
     var _ref2 = config[mentionChildIndex] || {},
         markup = _ref2.markup,
         _ref2$displayTransfor = _ref2.displayTransform,
-        displayTransform = _ref2$displayTransfor === void 0 ? Mention.defaultProps.defaultProps : _ref2$displayTransfor;
+        displayTransform = _ref2$displayTransfor === void 0 ? Mention.defaultProps.displayTransform : _ref2$displayTransfor;
 
     var idPos = offset + findPositionOfCapturingGroup(markup, 'id');
     var displayPos = offset + findPositionOfCapturingGroup(markup, 'display');
