@@ -3,8 +3,8 @@ import invariant from 'invariant'
 import markupToRegex from './markupToRegex'
 import countPlaceholders from './countPlaceholders'
 
-const readConfigFromChildren = children =>
-  Children.toArray(children).map(
+const readConfigFromChildren = children => {
+  const config = Children.toArray(children).map(
     ({ props: { markup, regex, displayTransform } }) => ({
       markup,
       regex: regex
@@ -12,7 +12,15 @@ const readConfigFromChildren = children =>
         : markupToRegex(markup),
       displayTransform: displayTransform || ((id, display) => display || id),
     })
-  )
+  );
+
+  console.log('-----------------------')
+  console.log(children)
+  console.log( Children.toArray(children))
+  console.log(config)
+
+  return config;
+}
 
 // make sure that the custom regex defines the correct number of capturing groups
 const coerceCapturingGroups = (regex, markup) => {

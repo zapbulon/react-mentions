@@ -369,7 +369,7 @@ var markupToRegex = function markupToRegex(m) {
 };
 
 var readConfigFromChildren = function readConfigFromChildren(children) {
-  return Children.toArray(children).map(function (_ref) {
+  var config = Children.toArray(children).map(function (_ref) {
     var _ref$props = _ref.props,
         markup = _ref$props.markup,
         regex = _ref$props.regex,
@@ -382,6 +382,11 @@ var readConfigFromChildren = function readConfigFromChildren(children) {
       }
     };
   });
+  console.log('-----------------------');
+  console.log(children);
+  console.log(Children.toArray(children));
+  console.log(config);
+  return config;
 }; // make sure that the custom regex defines the correct number of capturing groups
 
 

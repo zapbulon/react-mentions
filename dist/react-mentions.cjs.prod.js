@@ -146,7 +146,7 @@ var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, mar
   var markup = m || "", escapedMarkup = escapeRegex(markup), charAfterDisplay = markup[markup.indexOf(PLACEHOLDERS.display) + PLACEHOLDERS.display.length], charAfterId = markup[markup.indexOf(PLACEHOLDERS.id) + PLACEHOLDERS.id.length];
   return new RegExp(escapedMarkup.replace(PLACEHOLDERS.display, "([^".concat(escapeRegex(charAfterDisplay || ""), "]+?)")).replace(PLACEHOLDERS.id, "([^".concat(escapeRegex(charAfterId || ""), "]+?)")));
 }, readConfigFromChildren = function(children) {
-  return React.Children.toArray(children).map(function(_ref) {
+  var config = React.Children.toArray(children).map(function(_ref) {
     var _ref$props = _ref.props, markup = _ref$props.markup, regex = _ref$props.regex, displayTransform = _ref$props.displayTransform;
     return {
       markup: markup,
@@ -156,6 +156,8 @@ var emptyFn = function() {}, iterateMentionsMarkup = function(value, config, mar
       }
     };
   });
+  return console.log("-----------------------"), console.log(children), console.log(React.Children.toArray(children)), 
+  console.log(config), config;
 }, coerceCapturingGroups = function(regex, markup) {
   var numberOfGroups = new RegExp(regex.toString() + "|").exec("").length - 1, numberOfPlaceholders = countPlaceholders(markup);
   return invariant(numberOfGroups === numberOfPlaceholders, "Number of capturing groups in RegExp ".concat(regex.toString(), " (").concat(numberOfGroups, ") does not match the number of placeholders in the markup '").concat(markup, "' (").concat(numberOfPlaceholders, ")")), 
