@@ -179,6 +179,7 @@ var iterateMentionsMarkup = function iterateMentionsMarkup(value, config, markup
     var substr = value.substring(start, match.index);
     textIteratee(substr, start, currentPlainTextIndex);
     currentPlainTextIndex += substr.length;
+    console.log(value, match, start);
     markupIteratee(match[0], match.index, currentPlainTextIndex, id, display, mentionChildIndex, start);
     currentPlainTextIndex += display.length;
     start = regex.lastIndex;
