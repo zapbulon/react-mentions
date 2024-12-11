@@ -111,14 +111,14 @@ var _toConsumableArray = _interopDefault(require("@babel/runtime/helpers/toConsu
 }, DEFAULT_MENTION_PROPS = {
   trigger: "@",
   markup: "@[__display__](__id__)",
-  displayTransform: function(id, display) {
-    return display || id || "";
-  },
   onAdd: function() {
     return null;
   },
   onRemove: function() {
     return null;
+  },
+  displayTransform: function(id, display) {
+    return display || id;
   },
   renderSuggestion: null,
   isLoading: !1,
@@ -162,7 +162,7 @@ function _objectSpread(target) {
 }
 
 var readConfigFromChildren = function(children) {
-  var config = React.Children.toArray(children).filter(function(c) {
+  return React.Children.toArray(children).filter(function(c) {
     return !!c && c.props != [ void 0 ];
   }).map(function(_ref) {
     var _ref$props = _ref.props, _ref$props$markup = _ref$props.markup, markup = void 0 === _ref$props$markup ? DEFAULT_MENTION_PROPS.markup : _ref$props$markup, _ref$props$regex = _ref$props.regex, regex = void 0 === _ref$props$regex ? DEFAULT_MENTION_PROPS.regex : _ref$props$regex, _ref$props$displayTra = _ref$props.displayTransform, displayTransform = void 0 === _ref$props$displayTra ? DEFAULT_MENTION_PROPS.displayTransform : _ref$props$displayTra;
@@ -172,12 +172,6 @@ var readConfigFromChildren = function(children) {
       regex: regex ? coerceCapturingGroups(regex, markup) : markupToRegex(markup)
     });
   });
-  return console.log("-----------------------"), console.log(children), console.log("+++++++++++++++++++++++"), 
-  console.log(React.Children.toArray(children).filter(function(a) {
-    return !!a;
-  }).map(function(a) {
-    return console.log(a.props);
-  })), console.log("......................."), console.log("config:", config), config;
 }, coerceCapturingGroups = function(regex, markup) {
   var numberOfGroups = new RegExp(regex.toString() + "|").exec("").length - 1, numberOfPlaceholders = countPlaceholders(markup);
   return invariant(numberOfGroups === numberOfPlaceholders, "Number of capturing groups in RegExp ".concat(regex.toString(), " (").concat(numberOfGroups, ") does not match the number of placeholders in the markup '").concat(markup, "' (").concat(numberOfPlaceholders, ")")), 
@@ -547,7 +541,7 @@ function Highlighter(_ref) {
       }
     }
   }, config = readConfigFromChildren(children);
-  console.log("config:", config), selectionEnd === selectionStart && (caretPositionInMarkup = mapPlainTextIndex(value, config, selectionStart, "START"));
+  selectionEnd === selectionStart && (caretPositionInMarkup = mapPlainTextIndex(value, config, selectionStart, "START"));
   var resultComponents = [], componentKeys = {}, components = resultComponents, substringComponentKey = 0, renderSubstring = function(string, key) {
     return React__default.createElement("span", _extends({}, style("substring"), {
       key: key
@@ -558,7 +552,7 @@ function Highlighter(_ref) {
       display: display,
       key: key
     }, child = React.Children.toArray(children)[mentionChildIndex];
-    return React__default.cloneElement(child, props);
+    return console.log(child, React__default.cloneElement(child, props)), React__default.cloneElement(child, props);
   };
   return iterateMentionsMarkup(value || "", config, function(markup, index, indexInPlainText, id, display, mentionChildIndex, lastMentionEndIndex) {
     var key = _generateComponentKey(componentKeys, id);

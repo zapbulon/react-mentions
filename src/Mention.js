@@ -4,11 +4,9 @@ import useStyles from 'substyle'
 export const DEFAULT_MENTION_PROPS = {
   trigger: '@',
   markup: '@[__display__](__id__)',
-  displayTransform: function(id, display) {
-    return display || id || ''
-  },
   onAdd: () => null,
   onRemove: () => null,
+  displayTransform: (id, display) => display || id,
   renderSuggestion: null,
   isLoading: false,
   appendSpaceOnAdd: false,

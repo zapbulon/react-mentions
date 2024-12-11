@@ -57,7 +57,6 @@ function Highlighter({
 
   const config = readConfigFromChildren(children)
 
-  console.log('config:', config)
   let caretPositionInMarkup
 
   if (selectionEnd === selectionStart) {
@@ -123,7 +122,9 @@ function Highlighter({
 
   const getMentionComponentForMatch = (id, display, mentionChildIndex, key) => {
     const props = { id, display, key }
-    const child = Children.toArray(children)[mentionChildIndex]
+    const child = Children.toArray(children)[mentionChildIndex];
+
+    console.log(child, React.cloneElement(child, props))
     return React.cloneElement(child, props)
   }
 

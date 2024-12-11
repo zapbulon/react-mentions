@@ -319,14 +319,14 @@ var markupToRegex = function markupToRegex(m) {
 var DEFAULT_MENTION_PROPS = {
   trigger: '@',
   markup: '@[__display__](__id__)',
-  displayTransform: function displayTransform(id, display) {
-    return display || id || '';
-  },
   onAdd: function onAdd() {
     return null;
   },
   onRemove: function onRemove() {
     return null;
+  },
+  displayTransform: function displayTransform(id, display) {
+    return display || id;
   },
   renderSuggestion: null,
   isLoading: false,
@@ -377,16 +377,6 @@ var readConfigFromChildren = function readConfigFromChildren(children) {
       regex: regex ? coerceCapturingGroups(regex, markup) : markupToRegex(markup)
     });
   });
-  console.log('-----------------------');
-  console.log(children);
-  console.log('+++++++++++++++++++++++');
-  console.log(React.Children.toArray(children).filter(function (a) {
-    return !!a;
-  }).map(function (a) {
-    return console.log(a.props);
-  }));
-  console.log('.......................');
-  console.log('config:', config);
   return config;
 }; // make sure that the custom regex defines the correct number of capturing groups
 
@@ -823,7 +813,6 @@ function Highlighter(_ref) {
   };
 
   var config = readConfigFromChildren(children);
-  console.log('config:', config);
   var caretPositionInMarkup;
 
   if (selectionEnd === selectionStart) {
@@ -870,6 +859,7 @@ function Highlighter(_ref) {
       key: key
     };
     var child = React.Children.toArray(children)[mentionChildIndex];
+    console.log(child, /*#__PURE__*/React__default.cloneElement(child, props));
     return /*#__PURE__*/React__default.cloneElement(child, props);
   };
 
